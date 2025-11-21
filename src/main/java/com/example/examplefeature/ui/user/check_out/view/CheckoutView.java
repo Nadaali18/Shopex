@@ -1,4 +1,4 @@
-package com.example.examplefeature.ui.user;
+package com.example.examplefeature.ui.user.check_out.view;
 
 import com.example.examplefeature.model.ProductData;
 import com.vaadin.flow.component.UI;

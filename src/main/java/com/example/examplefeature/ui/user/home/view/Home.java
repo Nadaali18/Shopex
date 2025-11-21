@@ -1,9 +1,9 @@
-package com.example.examplefeature.ui.user;
+package com.example.examplefeature.ui.user.home.view;
 import com.example.examplefeature.ui.layout.AppFooter;
-import com.example.examplefeature.ui.layout.user.HomeCategoriesBar;
-import com.example.examplefeature.ui.layout.user.HomeImageSlider;
-import com.example.examplefeature.ui.layout.user.ProductsGrid;
-import com.example.examplefeature.ui.layout.user.UserHeader;
+import com.example.examplefeature.ui.layout.UserHeader;
+import com.example.examplefeature.ui.user.home.layout.BestProductsSection;
+import com.example.examplefeature.ui.user.home.layout.HomeCategoriesBar;
+import com.example.examplefeature.ui.user.home.layout.HomeImageSlider;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.Route;
 
@@ -17,7 +17,7 @@ public class Home extends VerticalLayout {
         add(new UserHeader("home"));
         add(new HomeImageSlider());
         add(new HomeCategoriesBar());
-        add(new ProductsGrid());
+        add(new BestProductsSection());
         add(new AppFooter());
     }
 }

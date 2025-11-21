@@ -1,4 +1,4 @@
-package com.example.examplefeature.ui.signup;
+package com.example.examplefeature.ui.auth.signup;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;

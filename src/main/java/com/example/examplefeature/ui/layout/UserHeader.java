@@ -1,4 +1,4 @@
-package com.example.examplefeature.ui.layout.user;
+package com.example.examplefeature.ui.layout;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.html.*;

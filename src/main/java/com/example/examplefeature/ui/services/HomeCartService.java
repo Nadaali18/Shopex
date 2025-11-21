@@ -1,34 +1,46 @@
 package com.example.examplefeature.ui.services;
 
-import com.vaadin.flow.server.VaadinSession;
-import java.util.*;
+import com.example.examplefeature.model.ProductData;
+import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.notification.Notification;
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeCartService {
-
-    public static void addProduct(String name, double price, int qty) {
-
-        List<Map<String, Object>> cart =
-                (List<Map<String, Object>>) VaadinSession.getCurrent().getAttribute("cart");
-
-        if (cart == null) {
-            cart = new ArrayList<>();
+    
+    @SuppressWarnings("unchecked")
+    public static void addProductToCart(String name, String category, String price, String imagePath) {
+        List<ProductData> cartItems = (List<ProductData>) UI.getCurrent().getSession()
+                .getAttribute("cartItems");
+        
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
         }
-
-        Map<String, Object> item = new HashMap<>();
-        item.put("name", name);
-        item.put("price", price);
-        item.put("qty", qty);
-
-        cart.add(item);
-
-        VaadinSession.getCurrent().setAttribute("cart", cart);
+        
+        boolean productExists = false;
+        for (ProductData item : cartItems) {
+            if (item.getName().equals(name)) {
+                item.setQuantity(item.getQuantity() + 1);
+                productExists = true;
+                break;
+            }
+        }
+        
+        if (!productExists) {
+            ProductData newProduct = new ProductData(name, category, price, imagePath);
+            cartItems.add(newProduct);
+        }
+        
+        UI.getCurrent().getSession().setAttribute("cartItems", cartItems);
+        updateSubtotal(cartItems);
+        
+        Notification.show("✓ " + name + " added to cart!", 2000, Notification.Position.BOTTOM_START);
     }
-
-    public static List<Map<String, Object>> getCart() {
-        return (List<Map<String, Object>>) VaadinSession.getCurrent().getAttribute("cart");
-    }
-
-    public static void clearCart() {
-        VaadinSession.getCurrent().setAttribute("cart", new ArrayList<>());
+    
+    private static void updateSubtotal(List<ProductData> cartItems) {
+        double subtotal = cartItems.stream()
+                .mapToDouble(ProductData::getTotal)
+                .sum();
+        UI.getCurrent().getSession().setAttribute("subtotal", subtotal);
     }
 }
