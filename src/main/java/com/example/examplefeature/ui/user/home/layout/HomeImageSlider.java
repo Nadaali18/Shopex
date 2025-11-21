@@ -1,4 +1,5 @@
 package com.example.examplefeature.ui.user.home.layout;
+
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
@@ -16,16 +17,22 @@ public class HomeImageSlider extends Div {
     private void createSlider() {
         Div sliderContainer = new Div();
         sliderContainer.setWidth("1200px");
-        sliderContainer.getStyle().set("min-height","400px");
-        sliderContainer.getStyle().set("overflow", "hidden");
-        sliderContainer.getStyle().set("position", "relative");
-        sliderContainer.getStyle().set("margin", "30px auto");
+        sliderContainer.setHeight("500px");     
+        sliderContainer.getStyle()
+                .set("overflow", "hidden")
+                .set("position", "relative")
+                .set("margin", "30px auto")
+                .set("border", "2px solid #e0e0e0")    
+                .set("border-radius", "8px")    
+                .set("box-shadow", "0 4px 12px rgba(0,0,0,0.1)");   
 
         String[] sliderImages = SLIDER_IMAGES;
         Image sliderImage = new Image(sliderImages[0], "Slide 1");
-        sliderImage.setWidthFull();
-        sliderImage.setHeightFull();
-        sliderImage.getStyle().set("object-fit", "fill");
+        sliderImage.setWidth("1200px"); 
+        sliderImage.setHeight("500px"); 
+        sliderImage.getStyle()
+                .set("object-fit", "fill")        
+                .set("display", "block");       
 
         sliderContainer.add(sliderImage);
 
@@ -44,7 +51,9 @@ public class HomeImageSlider extends Div {
                 .set("border-radius", "50%")
                 .set("width", "40px")
                 .set("height", "40px")
-                .set("cursor", "pointer");
+                .set("cursor", "pointer")
+                .set("font-weight", "bold")
+                .set("font-size", "16px");
 
         rightButton.getStyle()
                 .set("position", "absolute")
@@ -58,7 +67,9 @@ public class HomeImageSlider extends Div {
                 .set("border-radius", "50%")
                 .set("width", "40px")
                 .set("height", "40px")
-                .set("cursor", "pointer");
+                .set("cursor", "pointer")
+                .set("font-weight", "bold")
+                .set("font-size", "16px");
 
         sliderContainer.add(leftButton, rightButton);
 
@@ -74,6 +85,7 @@ public class HomeImageSlider extends Div {
             sliderImage.setSrc(sliderImages[currentIndex[0]]);
         });
 
+          
         UI.getCurrent().access(() -> {
             new Thread(() -> {
                 try {
@@ -89,6 +101,14 @@ public class HomeImageSlider extends Div {
                 }
             }).start();
         });
+
         add(sliderContainer);
+        
+        
+        getStyle()
+                .set("display", "flex")
+                .set("justify-content", "center")
+                .set("align-items", "center")
+                .set("width", "100%");
     }
 }
