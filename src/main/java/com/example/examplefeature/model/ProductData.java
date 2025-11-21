@@ -1,5 +1,4 @@
 package com.example.examplefeature.model;
-
 import java.io.Serializable;
 
 public class ProductData implements Serializable {
@@ -10,9 +9,7 @@ public class ProductData implements Serializable {
     private String imagePath;
     private int quantity;
 
-    public ProductData() {
-        // constructor فارغ مطلوب للـ serialization
-    }
+    public ProductData() {}
 
     public ProductData(String name, String category, String price, String imagePath) {
         this.name = name;
@@ -31,7 +28,6 @@ public class ProductData implements Serializable {
         }
     }
 
-    // Getters and Setters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
     
