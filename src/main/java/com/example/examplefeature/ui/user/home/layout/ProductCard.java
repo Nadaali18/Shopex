@@ -1,6 +1,6 @@
 package com.example.examplefeature.ui.user.home.layout;
 
-import com.example.examplefeature.ui.services.HomeCartService;
+import com.example.examplefeature.services.HomeCartService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.html.Image;

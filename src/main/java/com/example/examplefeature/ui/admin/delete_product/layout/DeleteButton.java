@@ -1,6 +1,6 @@
 package com.example.examplefeature.ui.admin.delete_product.layout;
 
-import com.example.examplefeature.model.ProductsDeletePage;
+import com.example.examplefeature.model.Product;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.confirmdialog.ConfirmDialog;
 import com.vaadin.flow.component.icon.Icon;
@@ -11,7 +11,7 @@ import java.util.function.Consumer;
 
 public class DeleteButton extends Button {
 
-    public DeleteButton(ProductsDeletePage product, Consumer<ProductsDeletePage> deleteCallback) {
+    public DeleteButton(Product product, Consumer<Product> deleteCallback) {
         super("Delete", new Icon(VaadinIcon.TRASH));
         
         getStyle()
@@ -33,7 +33,7 @@ public class DeleteButton extends Button {
         addClickListener(e -> showDeleteConfirmation(product, deleteCallback));
     }
 
-    private void showDeleteConfirmation(ProductsDeletePage product, Consumer<ProductsDeletePage> deleteCallback) {
+    private void showDeleteConfirmation(Product product, Consumer<Product> deleteCallback) {
         ConfirmDialog dialog = new ConfirmDialog();
         dialog.setHeader("Delete Product");
         dialog.setText("Are you sure you want to delete \"" + product.getName() + "\"? This action cannot be undone.");

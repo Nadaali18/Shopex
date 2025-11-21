@@ -1,15 +1,15 @@
 package com.example.examplefeature.model;
 
-public class ProductsDeletePage {
+public class Product{
     private String name;
     private String category;
     private double price;
     private int stock;
 
-    public ProductsDeletePage() {
+    public Product() {
     }
 
-    public ProductsDeletePage(String name, String category, double price, int stock) {
+    public Product(String name, String category, double price, int stock) {
         this.name = name;
         this.category = category;
         this.price = price;
@@ -57,5 +57,18 @@ public class ProductsDeletePage {
                 ", price=" + price +
                 ", stock=" + stock +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Product product = (Product) obj;
+        return name.equals(product.name) && category.equals(product.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(name, category);
     }
 }

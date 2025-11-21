@@ -1,4 +1,4 @@
-package com.example.examplefeature.ui.services;
+package com.example.examplefeature.services;
 import com.vaadin.flow.component.UI;
 import java.util.*;
 

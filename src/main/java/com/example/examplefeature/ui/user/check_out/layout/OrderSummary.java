@@ -1,7 +1,7 @@
 package com.example.examplefeature.ui.user.check_out.layout;
 
 import com.example.examplefeature.model.ProductData;
-import com.example.examplefeature.ui.services.CheckoutService;
+import com.example.examplefeature.services.CheckoutService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
