@@ -1,6 +1,6 @@
 package com.example.examplefeature.ui.user.home.view;
 import com.example.examplefeature.ui.layout.AppFooter;
-import com.example.examplefeature.ui.layout.UserHeader;
+import com.example.examplefeature.ui.layout.AppHeader;
 import com.example.examplefeature.ui.user.home.layout.BestProductsSection;
 import com.example.examplefeature.ui.user.home.layout.HomeCategoriesBar;
 import com.example.examplefeature.ui.user.home.layout.HomeImageSlider;
@@ -14,7 +14,7 @@ public class Home extends VerticalLayout {
         setPadding(false);
         setSpacing(false);
 
-        add(new UserHeader("home"));
+        add(new AppHeader("user","home"));
         add(new HomeImageSlider());
         add(new HomeCategoriesBar());
         add(new BestProductsSection());

@@ -1,6 +1,6 @@
 package com.example.examplefeature.ui.user.check_out.view;
 import com.example.examplefeature.ui.layout.AppFooter;
-import com.example.examplefeature.ui.layout.UserHeader;
+import com.example.examplefeature.ui.layout.AppHeader;
 import com.example.examplefeature.ui.user.check_out.layout.OrderSummary;
 import com.example.examplefeature.ui.user.check_out.layout.PaymentSection;
 import com.vaadin.flow.component.html.H1;
@@ -20,7 +20,7 @@ public class CheckoutView extends VerticalLayout {
         setPadding(false);
         setSpacing(false);
 
-        add(new UserHeader("checkout"));
+        add(new AppHeader("user","checkout"));
         add(createPageTitle());
         add(createMainContent());
         add(new AppFooter());

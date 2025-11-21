@@ -1,7 +1,7 @@
 package com.example.examplefeature.ui.user.cart.view;
 
 import com.example.examplefeature.ui.layout.AppFooter;
-import com.example.examplefeature.ui.layout.UserHeader;
+import com.example.examplefeature.ui.layout.AppHeader;
 import com.example.examplefeature.ui.user.cart.layout.CartContainer;
 import com.example.examplefeature.ui.user.cart.layout.CheckoutBox;
 import com.vaadin.flow.component.html.H2;
@@ -15,7 +15,7 @@ public class CartView extends VerticalLayout {
         setWidthFull();
         setPadding(false);
 
-        add(new UserHeader("cart"));
+        add(new AppHeader("user","cart"));
         add(createTitle());
         
         CartContainer cartContainer = new CartContainer();

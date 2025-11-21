@@ -1,7 +1,7 @@
 package com.example.examplefeature.ui.user.about_us.view;
 
 import com.example.examplefeature.ui.layout.AppFooter;
-import com.example.examplefeature.ui.layout.UserHeader;
+import com.example.examplefeature.ui.layout.AppHeader;
 import com.example.examplefeature.ui.user.about_us.layout.AboutHeader;
 import com.example.examplefeature.ui.user.about_us.layout.AboutTeamSection;
 import com.example.examplefeature.ui.user.about_us.layout.MissionSection;
@@ -17,7 +17,7 @@ public class AboutUsView extends VerticalLayout {
         setPadding(false);
         setSpacing(false);
 
-        add(new UserHeader("aboutUs"));
+        add(new AppHeader("user","aboutUs"));
         add(buildMainContent());
         add(new AppFooter());
     }
