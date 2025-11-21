@@ -1,6 +1,6 @@
 # Shopex E-commerce Platform
 
-- Shopex is a modern, full-featured e-commerce platform built with Vaadin and Spring Boot
+Shopex is a modern, full-featured e-commerce platform built with Vaadin and Spring Boot
 providing seamless shopping experiences for customers and powerful management tools for
 administrators.
 
