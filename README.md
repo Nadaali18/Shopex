@@ -4,9 +4,9 @@
 providing seamless shopping experiences for customers and powerful management tools for
 administrators.
 
-## 🚀 Features
+# 🚀 Features
 
-# 👥 Customer Features
+## 👥 Customer Features
 - Home Page - Product showcases with image slider and categories
 - Product Browsing - Organized by categories with best products section
 - Shopping Cart - Add, update, and manage cart items
@@ -14,13 +14,13 @@ administrators.
 - Order Management - Track and manage orders
 - About Us - Company information and team details
 
-# 👨‍💼 Admin Features
+## 👨‍💼 Admin Features
 - Dashboard - Overview of store management
 - Product Management - Add, update, and delete products
 - Inventory Control - Stock management and tracking
 - Order Processing - Manage customer orders
 
-## Project Structure
+# Project Structure
 
 The sources of  Website have the following structure:
 
@@ -67,14 +67,14 @@ src/main/java/com/example/examplefeature/
     ├── CommonHeader.java             
     └── AppFooter.java                                
 ```
-## 📦 Installation & Setup
+# 📦 Installation & Setup
 
-# Prerequisites
+## Prerequisites
 
 - Java 17 or higher
 - Maven 3.6+
 
-# Development Mode
+## Development Mode
 
 - Clone and import the project into your IDE
 - Start the application in development mode:
