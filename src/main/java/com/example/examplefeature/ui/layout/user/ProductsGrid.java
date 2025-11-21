@@ -1,5 +1,5 @@
 package com.example.examplefeature.ui.layout.user;
-import com.example.examplefeature.ui.services.CartService;
+import com.example.examplefeature.ui.services.HomeCartService;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
@@ -43,7 +43,7 @@ public class ProductsGrid extends Div {
         priceLabel.getStyle().set("color", "green");
 
         Button btn = new Button("Add to Cart", event -> {
-            CartService.addProduct(title, price, 1);
+            HomeCartService.addProduct(title, price, 1);
             UI.getCurrent().navigate("cart");
         });
 
