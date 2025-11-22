@@ -3,12 +3,15 @@
 ## 🚀 Quick Start (5 Minutes)
 
 ### Step 1: Install MySQL
+
 If you don't have MySQL installed:
+
 - **Windows**: Download from [MySQL Downloads](https://dev.mysql.com/downloads/installer/)
 - **Mac**: `brew install mysql`
 - **Linux**: `sudo apt-get install mysql-server`
 
 ### Step 2: Start MySQL
+
 ```bash
 # Windows - MySQL should start automatically
 # Mac
@@ -19,28 +22,35 @@ sudo service mysql start
 ```
 
 ### Step 3: Configure Database Password
+
 Open `src/main/resources/application.properties` and update:
+
 ```properties
 spring.datasource.password=YOUR_MYSQL_ROOT_PASSWORD
 ```
 
 If you don't have a MySQL password set, leave it empty:
+
 ```properties
 spring.datasource.password=
 ```
 
 ### Step 4: Run the Application
+
 ```bash
 mvn spring-boot:run
 ```
 
 Or on Windows:
+
 ```bash
 mvnw.cmd spring-boot:run
 ```
 
 ### Step 5: Access the Application
+
 Open your browser and go to:
+
 ```
 http://localhost:8080
 ```
@@ -48,11 +58,13 @@ http://localhost:8080
 ## 🔑 Login Credentials
 
 ### Admin Access
+
 - Username: `admin`
 - Password: `admin123`
 - URL: After login, you'll be redirected to admin dashboard
 
 ### User Access
+
 - Username: `user`
 - Password: `user123`
 - URL: After login, you'll be redirected to home page
@@ -61,7 +73,7 @@ http://localhost:8080
 
 1. **Database Creation**: The application automatically creates the `shopex` database
 2. **Tables Creation**: All necessary tables are created via Hibernate
-3. **Sample Data**: 
+3. **Sample Data**:
    - 2 user accounts (admin and user)
    - 8 sample products with images
 4. **Ready to Use**: The application is immediately ready for testing
@@ -69,6 +81,7 @@ http://localhost:8080
 ## 🎯 Quick Test Flow
 
 ### As a Customer (User):
+
 1. Login with `user / user123`
 2. Browse products on home page
 3. Add products to cart
@@ -77,6 +90,7 @@ http://localhost:8080
 6. Complete order with payment method
 
 ### As an Admin:
+
 1. Login with `admin / admin123`
 2. View admin dashboard
 3. Add new products
@@ -87,19 +101,25 @@ http://localhost:8080
 ## ⚠️ Common Issues
 
 ### Issue: "Access denied for user 'root'@'localhost'"
+
 **Solution**: Update MySQL password in `application.properties`
 
 ### Issue: "Unknown database 'shopex'"
+
 **Solution**: Ensure `createDatabaseIfNotExist=true` is in the datasource URL
 
 ### Issue: Port 8080 already in use
+
 **Solution**: Change port in `application.properties`:
+
 ```properties
 server.port=9090
 ```
 
 ### Issue: Application won't start
+
 **Solutions**:
+
 1. Ensure Java 21+ is installed: `java -version`
 2. Ensure Maven is installed: `mvn -version`
 3. Ensure MySQL is running
@@ -108,17 +128,21 @@ server.port=9090
 ## 🔧 Advanced Configuration
 
 ### Using Different Database
+
 To use a different database name:
+
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/my_shop?createDatabaseIfNotExist=true
 ```
 
 ### Using Different Port
+
 ```properties
 server.port=8081
 ```
 
 ### Disable Auto-Browser Launch
+
 ```properties
 vaadin.launch-browser=false
 ```

@@ -3,14 +3,17 @@
 ## ⚠️ Current Warnings (Non-Critical)
 
 ### 1. Deprecated Vaadin Components
+
 **Issue**: Some views use deprecated Upload API (MemoryBuffer)
 **Files Affected**:
+
 - `ProductImageSection.java`
 - `ScreenshotUpload.java`
 
 **Impact**: Low - Still works, but will be removed in future Vaadin versions
 
 **Fix**: Update to new Upload API when upgrading Vaadin
+
 ```java
 // Old (deprecated)
 MemoryBuffer buffer = new MemoryBuffer();
@@ -21,15 +24,18 @@ Upload upload = new Upload(buffer);
 ```
 
 ### 2. Spring Boot Version
+
 **Issue**: Newer patch version available (3.5.8 vs 3.5.7)
 **Impact**: Very low - minor bug fixes only
 
 **Fix**: Update pom.xml
+
 ```xml
 <version>3.5.8</version>
 ```
 
 ### 3. VaadinWebSecurity Deprecation
+
 **Issue**: VaadinWebSecurity class marked for removal
 **Impact**: Low - Works for now, will need update in Vaadin 25+
 
@@ -46,26 +52,29 @@ Upload upload = new Upload(buffer);
 Some views create service instances directly instead of using Spring DI:
 
 **Files Affected**:
+
 - `ProductGrid.java` (delete product)
-- `ProductSelectionGrid.java` (update product)  
+- `ProductSelectionGrid.java` (update product)
 - `ProductUpdateForm.java` (update product)
 - `OrderSummary.java` (checkout)
 - `ProductCard.java` (home)
 
 **Current Issue**:
+
 ```java
 // Wrong - creates new instance
 productService = new ProductService();
 ```
 
 **Proper Solution**:
+
 ```java
 // Views should be:
 @Route("delete-product")
 public class DeleteProductView extends VerticalLayout {
-    
+
     private final ProductService productService;
-    
+
     public DeleteProductView(ProductService productService) {
         this.productService = productService;
         // ...
@@ -73,7 +82,7 @@ public class DeleteProductView extends VerticalLayout {
 }
 ```
 
-**Workaround Applied**: 
+**Workaround Applied**:
 The adapter service classes (ProductService, CartService, CheckoutService) are annotated with `@Service` and can be autowired. However, some layout components need refactoring to receive services via constructor.
 
 **Priority**: Medium - Works but not following best practices
@@ -85,10 +94,12 @@ The adapter service classes (ProductService, CartService, CheckoutService) are a
 ### High Priority
 
 1. **Refactor Layout Components to Use DI**
+
    - Convert ProductGrid, ProductSelectionGrid, ProductUpdateForm to use constructor injection
    - Pass services from parent views to child components
 
 2. **Update Upload Components**
+
    - Migrate from deprecated MemoryBuffer to new API
    - Use modern FileReceiver pattern
 
@@ -99,11 +110,13 @@ The adapter service classes (ProductService, CartService, CheckoutService) are a
 ### Medium Priority
 
 4. **Error Handling**
+
    - Add global exception handler
    - Implement user-friendly error messages
    - Add logging framework (SLF4J with Logback)
 
 5. **Validation**
+
    - Add Bean Validation annotations to entities
    - Implement input validation in views
    - Add business rule validation
@@ -116,11 +129,13 @@ The adapter service classes (ProductService, CartService, CheckoutService) are a
 ### Low Priority
 
 7. **Performance Optimization**
+
    - Add caching for frequently accessed data
    - Optimize database queries with projections
    - Add lazy loading for large datasets
 
 8. **Security Enhancements**
+
    - Add HTTPS enforcement
    - Implement rate limiting
    - Add audit logging
@@ -137,6 +152,7 @@ The adapter service classes (ProductService, CartService, CheckoutService) are a
 ### Must Do:
 
 ✅ Change default passwords
+
 ```properties
 # Don't use these in production!
 admin / admin123
@@ -144,18 +160,21 @@ user / user123
 ```
 
 ✅ Update database configuration
+
 ```properties
 spring.jpa.hibernate.ddl-auto=validate
 # Use Flyway or Liquibase for migrations
 ```
 
 ✅ Add proper logging
+
 ```properties
 logging.level.com.example=INFO
 logging.file.name=logs/shopex.log
 ```
 
 ✅ Configure production database
+
 ```properties
 spring.datasource.url=jdbc:mysql://production-db-host:3306/shopex
 spring.datasource.username=production_user
@@ -163,6 +182,7 @@ spring.datasource.password=${DB_PASSWORD}
 ```
 
 ✅ Enable HTTPS
+
 ```properties
 server.ssl.enabled=true
 server.ssl.key-store=classpath:keystore.p12
@@ -198,11 +218,13 @@ server.ssl.key-store-password=${SSL_PASSWORD}
 When upgrading to newer versions:
 
 ### Vaadin 25.x
+
 - Replace VaadinWebSecurity with new security config
 - Update Upload components to new API
 - Check for other deprecated components
 
 ### Spring Boot 4.x
+
 - Review breaking changes in Spring Security
 - Update Jakarta namespace if needed
 - Check dependency compatibility
@@ -224,13 +246,13 @@ When upgrading to newer versions:
 
 ## 📊 Technical Debt Summary
 
-| Category | Items | Priority | Effort |
-|----------|-------|----------|--------|
-| Deprecations | 3 | Low | 2-4 hours |
-| DI Refactoring | 5 views | Medium | 4-6 hours |
-| Testing | Missing | High | 8-16 hours |
-| Documentation | Incomplete | Medium | 2-4 hours |
-| Security | Basic | High | 4-8 hours |
+| Category       | Items      | Priority | Effort     |
+| -------------- | ---------- | -------- | ---------- |
+| Deprecations   | 3          | Low      | 2-4 hours  |
+| DI Refactoring | 5 views    | Medium   | 4-6 hours  |
+| Testing        | Missing    | High     | 8-16 hours |
+| Documentation  | Incomplete | Medium   | 2-4 hours  |
+| Security       | Basic      | High     | 4-8 hours  |
 
 **Total Estimated Effort**: 20-38 hours for full production readiness
 
@@ -239,12 +261,14 @@ When upgrading to newer versions:
 ## 🎯 Conclusion
 
 The application is **fully functional** and suitable for:
+
 - ✅ Development
 - ✅ Testing
 - ✅ Demos
 - ✅ Learning
 
 For production use:
+
 - ⚠️ Address security concerns
 - ⚠️ Refactor DI issues
 - ⚠️ Add comprehensive testing
@@ -255,4 +279,4 @@ For production use:
 
 ---
 
-*This document will be updated as improvements are made.*
+_This document will be updated as improvements are made._

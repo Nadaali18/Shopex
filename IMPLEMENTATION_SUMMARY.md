@@ -9,25 +9,29 @@ Your Shopex project has been successfully converted from a dummy-data applicatio
 ## ✅ What Was Implemented
 
 ### 1. Database Configuration ✓
+
 - **MySQL Integration** - Full MySQL 8 database support
 - **Connection Pooling** - HikariCP for efficient connections
 - **Auto Schema Generation** - Hibernate DDL auto-update
 - **Configuration File** - Updated `application.properties` with database settings
 
 ### 2. JPA Entities ✓
+
 Created 6 complete entity classes with proper relationships:
 
-| Entity | Description | Relationships |
-|--------|-------------|---------------|
-| `User` | User accounts with roles | OneToOne with Cart, OneToMany with Orders |
-| `Product` | Product catalog | Referenced by CartItems and OrderItems |
-| `Cart` | Shopping cart | OneToOne with User, OneToMany with CartItems |
-| `CartItem` | Cart line items | ManyToOne with Cart and Product |
-| `Order` | Customer orders | ManyToOne with User, OneToMany with OrderItems |
-| `OrderItem` | Order line items | ManyToOne with Order and Product |
+| Entity      | Description              | Relationships                                  |
+| ----------- | ------------------------ | ---------------------------------------------- |
+| `User`      | User accounts with roles | OneToOne with Cart, OneToMany with Orders      |
+| `Product`   | Product catalog          | Referenced by CartItems and OrderItems         |
+| `Cart`      | Shopping cart            | OneToOne with User, OneToMany with CartItems   |
+| `CartItem`  | Cart line items          | ManyToOne with Cart and Product                |
+| `Order`     | Customer orders          | ManyToOne with User, OneToMany with OrderItems |
+| `OrderItem` | Order line items         | ManyToOne with Order and Product               |
 
 ### 3. Repository Layer ✓
+
 Created 6 Spring Data JPA repositories:
+
 - `UserRepository` - User management with custom queries
 - `ProductRepository` - Product CRUD with search capabilities
 - `CartRepository` - Cart operations
@@ -36,33 +40,39 @@ Created 6 Spring Data JPA repositories:
 - `OrderItemRepository` - Order details
 
 ### 4. Service Layer ✓
+
 Implemented 5 complete service classes:
 
 **ProductServiceImpl**
+
 - Full CRUD operations
 - Category filtering
 - Stock management
 - Search functionality
 
 **UserServiceImpl**
+
 - User registration
 - Password encryption (BCrypt)
 - User authentication
 - Role management
 
 **CartServiceImpl**
+
 - Add/remove items
 - Update quantities
 - Calculate totals
 - Clear cart
 
 **CheckoutServiceImpl**
+
 - Order creation from cart
 - Stock validation
 - Payment processing
 - Tax and shipping calculation
 
 **OrderServiceImpl**
+
 - Order history
 - Order status updates
 - Order cancellation
@@ -71,23 +81,28 @@ Implemented 5 complete service classes:
 ### 5. Security Implementation ✓
 
 **SecurityConfiguration**
+
 - Form-based authentication
 - BCrypt password encoding
 - Role-based access control
 - Vaadin integration
 
 **CustomUserDetailsService**
+
 - Database-backed authentication
 - User loading by username
 - Authority mapping
 
 **SecurityService**
+
 - Current user retrieval
 - Role checking utilities
 - Logout functionality
 
 ### 6. Service Integration ✓
+
 Updated existing service classes to use database:
+
 - `ProductService` - Now uses ProductServiceImpl
 - `CartService` - Database-backed cart operations
 - `CheckoutService` - Real order creation
@@ -97,18 +112,21 @@ Updated existing service classes to use database:
 ### 7. View Updates ✓
 
 **LoginView**
+
 - Integrated with Spring Security
 - Form-based authentication
 - Error handling
 - Auto-redirect based on role
 
 **SignupView**
+
 - User registration with validation
 - Email format checking
 - Password strength validation
 - Database persistence
 
 **HomeRedirect**
+
 - Role-based routing
 - Admin → Admin Dashboard
 - User → Home Page
@@ -117,6 +135,7 @@ Updated existing service classes to use database:
 ### 8. Data Initialization ✓
 
 **DataInitializer Component**
+
 - Auto-creates admin account (admin/admin123)
 - Auto-creates test user (user/user123)
 - Populates 8 sample products:
@@ -128,11 +147,13 @@ Updated existing service classes to use database:
 ### 9. Mapper Layer ✓
 
 **ProductMapper**
+
 - Converts between Entity and Model classes
 - Handles ProductData transformations
 - Maintains backward compatibility
 
 ### 10. Documentation ✓
+
 - **README.md** - Complete documentation with setup instructions
 - **SETUP.md** - Quick start guide for developers
 - Default credentials documented
@@ -179,6 +200,7 @@ Updated existing service classes to use database:
 ## 🗄️ Database Schema
 
 ### Tables Created (Auto-generated)
+
 - `users` - User accounts
 - `user_roles` - User role assignments
 - `products` - Product catalog
@@ -188,6 +210,7 @@ Updated existing service classes to use database:
 - `order_items` - Order details
 
 ### Key Relationships
+
 ```
 User (1) ←→ (1) Cart
 Cart (1) → (n) CartItem
@@ -202,22 +225,27 @@ Product (1) ← (n) OrderItem
 ## 🚀 How to Run
 
 ### 1. Configure MySQL
+
 Edit `application.properties`:
+
 ```properties
 spring.datasource.password=YOUR_MYSQL_PASSWORD
 ```
 
 ### 2. Start Application
+
 ```bash
 mvn spring-boot:run
 ```
 
 ### 3. Access Application
+
 ```
 http://localhost:8080
 ```
 
 ### 4. Login
+
 - **Admin**: admin / admin123
 - **User**: user / user123
 
@@ -289,12 +317,14 @@ src/main/java/com/example/examplefeature/
 ## 🔄 Migration from Old Code
 
 ### Before (Session-based)
+
 ```java
 // Old code - in-memory
 List<ProductData> cart = (List<ProductData>) session.getAttribute("cartItems");
 ```
 
 ### After (Database-backed)
+
 ```java
 // New code - database
 User user = getCurrentUser();
@@ -340,6 +370,7 @@ List<CartItem> items = cartService.getCartItems(user);
 ## 📞 Support
 
 For any issues:
+
 1. Check MySQL is running
 2. Verify credentials in `application.properties`
 3. Review console logs for errors
@@ -350,6 +381,7 @@ For any issues:
 ## 🎉 Summary
 
 **Your Shopex application is now a production-ready e-commerce platform with:**
+
 - ✅ Full database integration
 - ✅ Secure authentication
 - ✅ Role-based access

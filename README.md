@@ -5,6 +5,7 @@ Shopex is a modern, full-stack e-commerce platform built with **Vaadin**, **Spri
 ## 🚀 Features
 
 ### 👥 Customer Features
+
 - **User Authentication** - Secure login and registration
 - **Home Page** - Product showcases with image slider and categories
 - **Product Browsing** - Browse products by categories with real-time stock information
@@ -14,6 +15,7 @@ Shopex is a modern, full-stack e-commerce platform built with **Vaadin**, **Spri
 - **About Us** - Company information and team details
 
 ### 👨‍💼 Admin Features
+
 - **Admin Dashboard** - Overview of store management
 - **Product Management** - Add, update, and delete products with image upload
 - **Inventory Control** - Real-time stock management and tracking
@@ -23,6 +25,7 @@ Shopex is a modern, full-stack e-commerce platform built with **Vaadin**, **Spri
 ## 🏗️ Technology Stack
 
 ### Backend
+
 - **Spring Boot 3.5.7** - Application framework
 - **Spring Data JPA** - Database persistence
 - **Spring Security** - Authentication and authorization
@@ -30,10 +33,12 @@ Shopex is a modern, full-stack e-commerce platform built with **Vaadin**, **Spri
 - **Hibernate** - ORM framework
 
 ### Frontend
+
 - **Vaadin 24.9.5** - Java-based UI framework
 - **Responsive Design** - Mobile-friendly interface
 
 ### Security
+
 - **BCrypt Password Encoding** - Secure password storage
 - **Form-based Authentication** - Session-based login
 - **Role-based Access Control** - USER and ADMIN roles
@@ -41,6 +46,7 @@ Shopex is a modern, full-stack e-commerce platform built with **Vaadin**, **Spri
 ## 📁 Backend Architecture
 
 ### Entity Layer
+
 ```
 entity/
 ├── User.java          - User accounts with roles
@@ -52,6 +58,7 @@ entity/
 ```
 
 ### Repository Layer
+
 ```
 repository/
 ├── UserRepository.java
@@ -63,6 +70,7 @@ repository/
 ```
 
 ### Service Layer
+
 ```
 service/
 ├── UserServiceImpl.java       - User management & authentication
@@ -73,6 +81,7 @@ service/
 ```
 
 ### Security Layer
+
 ```
 security/
 ├── SecurityConfiguration.java      - Spring Security config
@@ -83,6 +92,7 @@ security/
 ## 📦 Installation & Setup
 
 ### Prerequisites
+
 - **Java 21** or higher
 - **Maven 3.6+**
 - **MySQL 8.0+**
@@ -93,6 +103,7 @@ security/
 1. **Install MySQL** (if not already installed)
 
 2. **Create Database** (Optional - auto-created by application)
+
 ```sql
 CREATE DATABASE shopex;
 ```
@@ -100,6 +111,7 @@ CREATE DATABASE shopex;
 3. **Configure Database Connection**
 
 Edit `src/main/resources/application.properties`:
+
 ```properties
 spring.datasource.url=jdbc:mysql://localhost:3306/shopex?createDatabaseIfNotExist=true
 spring.datasource.username=root
@@ -111,11 +123,13 @@ spring.datasource.password=YOUR_MYSQL_PASSWORD
 ### Running the Application
 
 #### Option 1: Using Maven
+
 ```bash
 mvn spring-boot:run
 ```
 
 #### Option 2: Using Maven Wrapper
+
 ```bash
 # Windows
 mvnw.cmd spring-boot:run
@@ -125,12 +139,14 @@ mvnw.cmd spring-boot:run
 ```
 
 #### Option 3: Using IDE
+
 - Import project as Maven project
 - Run `Application.java` main class
 
 ### Access the Application
 
 Once started, open your browser and navigate to:
+
 ```
 http://localhost:8080
 ```
@@ -140,11 +156,13 @@ http://localhost:8080
 The application comes with pre-configured test accounts:
 
 ### Admin Account
+
 - **Username**: `admin`
 - **Password**: `admin123`
 - **Access**: Full admin panel access
 
 ### User Account
+
 - **Username**: `user`
 - **Password**: `user123`
 - **Access**: Customer shopping features
@@ -152,6 +170,7 @@ The application comes with pre-configured test accounts:
 ## 📊 Database Schema
 
 ### Key Tables
+
 - `users` - User accounts and credentials
 - `user_roles` - User role assignments
 - `products` - Product catalog
@@ -161,6 +180,7 @@ The application comes with pre-configured test accounts:
 - `order_items` - Order details
 
 ### Relationships
+
 - User ↔ Cart (One-to-One)
 - Cart ↔ CartItems (One-to-Many)
 - User ↔ Orders (One-to-Many)
@@ -172,7 +192,7 @@ The application comes with pre-configured test accounts:
 - **Password Encryption**: BCrypt hashing
 - **Session Management**: Spring Security sessions
 - **CSRF Protection**: Enabled by default
-- **Role-based Access**: 
+- **Role-based Access**:
   - `/admin-*` routes require ADMIN role
   - `/cart`, `/checkout` require authentication
   - `/login`, `/signup` are public
@@ -180,29 +200,35 @@ The application comes with pre-configured test accounts:
 ## 🛠️ Development Features
 
 ### Auto-populated Sample Data
+
 The application automatically initializes with:
+
 - 8 sample products across different categories
 - Admin and user test accounts
 - Categories: Clothes, Shoes, Electronics, Accessories
 
 ### Hot Reload
+
 Vaadin supports hot reload in development mode for rapid development.
 
 ## 📝 API Endpoints
 
 ### Authentication
+
 - `GET /login` - Login page
 - `POST /login` - Process login
 - `GET /signup` - Registration page
 - `GET /logout` - Logout
 
 ### User Routes
+
 - `GET /home` - Product catalog
 - `GET /cart` - Shopping cart
 - `GET /checkout` - Checkout page
 - `GET /about-us` - About page
 
 ### Admin Routes (Requires ADMIN role)
+
 - `GET /admin-home` - Admin dashboard
 - `GET /add-product` - Add new product
 - `GET /update-product` - Update products
@@ -211,16 +237,19 @@ Vaadin supports hot reload in development mode for rapid development.
 ## 🚀 Production Deployment
 
 ### Build for Production
+
 ```bash
 mvn clean package -Pproduction
 ```
 
 ### Run Production Build
+
 ```bash
 java -jar target/app-1.0-SNAPSHOT.jar
 ```
 
 ### Environment Variables
+
 ```bash
 # Database
 SPRING_DATASOURCE_URL=jdbc:mysql://your-db-host:3306/shopex
@@ -247,10 +276,12 @@ docker run -p 8080:8080 \
 ## 🧪 Testing
 
 The project includes:
+
 - Spring Boot Test framework
 - Spring Security Test support
 
 Run tests:
+
 ```bash
 mvn test
 ```
@@ -258,18 +289,22 @@ mvn test
 ## 📚 Additional Configuration
 
 ### Change Default Port
+
 In `application.properties`:
+
 ```properties
 server.port=9090
 ```
 
 ### Enable SQL Logging
+
 ```properties
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 ```
 
 ### Production Database Settings
+
 ```properties
 spring.jpa.hibernate.ddl-auto=validate
 # Use Flyway or Liquibase for schema migrations
@@ -290,15 +325,18 @@ See LICENSE.md file for details.
 ## 🆘 Troubleshooting
 
 ### MySQL Connection Issues
+
 - Verify MySQL is running
 - Check database credentials in `application.properties`
 - Ensure database exists or `createDatabaseIfNotExist=true` is set
 
 ### Port Already in Use
+
 - Change port in `application.properties`
 - Or stop the process using port 8080
 
 ### Login Not Working
+
 - Verify default credentials (admin/admin123 or user/user123)
 - Check browser console for errors
 - Ensure Spring Security is properly configured
