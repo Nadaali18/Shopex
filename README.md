@@ -480,13 +480,6 @@ Shopex/
 └── README.md
 ```
 
-# 📦 Installation & Setup
-
-## Prerequisites
-
-- Java 17 or higher
-- Maven 3.6+
-
 ## Development Mode
 
 - Clone and import the project into your IDE
