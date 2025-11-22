@@ -15,8 +15,8 @@ public class ProductSelectionGrid extends VerticalLayout {
     private List<Product> products;
     private Consumer<Product> selectionListener;
 
-    public ProductSelectionGrid() {
-        productService = new ProductService();
+    public ProductSelectionGrid(ProductService productService) {
+        this.productService = productService;
         createSelectionGrid();
     }
 

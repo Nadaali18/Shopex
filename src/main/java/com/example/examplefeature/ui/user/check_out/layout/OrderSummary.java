@@ -25,8 +25,8 @@ public class OrderSummary extends VerticalLayout {
     private double shippingCost;
     private double total;
 
-    public OrderSummary() {
-        checkoutService = new CheckoutService();
+    public OrderSummary(CheckoutService checkoutService) {
+        this.checkoutService = checkoutService;
         loadCartData();
         createOrderSummary();
     }

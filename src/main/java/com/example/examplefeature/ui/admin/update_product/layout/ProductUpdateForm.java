@@ -26,8 +26,8 @@ public class ProductUpdateForm extends VerticalLayout {
     private ProductService productService;
     private Product selectedProduct;
 
-    public ProductUpdateForm() {
-        productService = new ProductService();
+    public ProductUpdateForm(ProductService productService) {
+        this.productService = productService;
         createUpdateForm();
     }
 

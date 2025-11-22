@@ -1,16 +1,22 @@
 package com.example.examplefeature.ui.admin.delete_product.view;
 
+import com.example.examplefeature.services.ProductService;
 import com.example.examplefeature.ui.layout.AppFooter;
 import com.example.examplefeature.ui.layout.AppHeader;
 import com.example.examplefeature.ui.admin.delete_product.layout.ProductGrid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.RolesAllowed;
 
 @Route("delete-product")
+@RolesAllowed("ADMIN")
 public class DeleteProductView extends VerticalLayout {
 
-    public DeleteProductView() {
+    private final ProductService productService;
+
+    public DeleteProductView(ProductService productService) {
+        this.productService = productService;
         setWidthFull();
         setPadding(false);
         setSpacing(false);
@@ -40,7 +46,7 @@ public class DeleteProductView extends VerticalLayout {
         mainContent.add(mainTitle);
         mainContent.setAlignItems(Alignment.CENTER);
 
-        ProductGrid productGrid = new ProductGrid();
+        ProductGrid productGrid = new ProductGrid(productService);
         mainContent.add(productGrid);
 
         return mainContent;

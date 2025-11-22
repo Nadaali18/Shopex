@@ -1,46 +1,55 @@
 package com.example.examplefeature.services;
 
-import com.example.examplefeature.model.ProductData;
-import com.vaadin.flow.component.UI;
+import com.example.examplefeature.entity.User;
+import com.example.examplefeature.security.SecurityService;
+import com.example.examplefeature.service.CartServiceImpl;
+import com.example.examplefeature.service.ProductServiceImpl;
+import com.example.examplefeature.service.UserServiceImpl;
 import com.vaadin.flow.component.notification.Notification;
-import java.util.ArrayList;
-import java.util.List;
+import org.springframework.stereotype.Service;
 
+@Service
 public class HomeCartService {
     
-    @SuppressWarnings("unchecked")
-    public static void addProductToCart(String name, String category, String price, String imagePath) {
-        List<ProductData> cartItems = (List<ProductData>) UI.getCurrent().getSession()
-                .getAttribute("cartItems");
-        
-        if (cartItems == null) {
-            cartItems = new ArrayList<>();
-        }
-        
-        boolean productExists = false;
-        for (ProductData item : cartItems) {
-            if (item.getName().equals(name)) {
-                item.setQuantity(item.getQuantity() + 1);
-                productExists = true;
-                break;
-            }
-        }
-        
-        if (!productExists) {
-            ProductData newProduct = new ProductData(name, category, price, imagePath);
-            cartItems.add(newProduct);
-        }
-        
-        UI.getCurrent().getSession().setAttribute("cartItems", cartItems);
-        updateSubtotal(cartItems);
-        
-        Notification.show("✓ " + name + " added to cart!", 2000, Notification.Position.BOTTOM_START);
+    private final CartServiceImpl cartService;
+    private final ProductServiceImpl productService;
+    private final UserServiceImpl userService;
+    private final SecurityService securityService;
+    
+    public HomeCartService(CartServiceImpl cartService, 
+                          ProductServiceImpl productService,
+                          UserServiceImpl userService,
+                          SecurityService securityService) {
+        this.cartService = cartService;
+        this.productService = productService;
+        this.userService = userService;
+        this.securityService = securityService;
     }
     
-    private static void updateSubtotal(List<ProductData> cartItems) {
-        double subtotal = cartItems.stream()
-                .mapToDouble(ProductData::getTotal)
-                .sum();
-        UI.getCurrent().getSession().setAttribute("subtotal", subtotal);
+    public void addProductToCart(String name, String category, String price, String imagePath) {
+        try {
+            // Get current user
+            String username = securityService.getAuthenticatedUsername();
+            if (username == null) {
+                Notification.show("Please login to add items to cart", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+            
+            User user = userService.findByUsername(username)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            
+            // Find product by name
+            var product = productService.findAll().stream()
+                    .filter(p -> p.getTitle().equals(name))
+                    .findFirst()
+                    .orElseThrow(() -> new RuntimeException("Product not found"));
+            
+            // Add to cart
+            cartService.addItem(user, product.getId(), 1);
+            
+            Notification.show("✓ " + name + " added to cart!", 2000, Notification.Position.BOTTOM_START);
+        } catch (Exception e) {
+            Notification.show("Error adding to cart: " + e.getMessage(), 3000, Notification.Position.MIDDLE);
+        }
     }
 }

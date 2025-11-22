@@ -1,63 +1,84 @@
 package com.example.examplefeature.services;
-import com.example.examplefeature.model.Product;
-import java.util.ArrayList;
-import java.util.Arrays;
+
+import com.example.examplefeature.entity.Product;
+import com.example.examplefeature.mapper.ProductMapper;
+import com.example.examplefeature.service.ProductServiceImpl;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Service
 public class ProductService {
 
-    private List<Product> products;
+    private final ProductServiceImpl productServiceImpl;
+    private final ProductMapper productMapper;
 
-    public ProductService() {
-        initializeSampleData();
+    public ProductService(ProductServiceImpl productServiceImpl, ProductMapper productMapper) {
+        this.productServiceImpl = productServiceImpl;
+        this.productMapper = productMapper;
     }
 
-    private void initializeSampleData() {
-        products = new ArrayList<>(Arrays.asList(
-            new Product("SweetShirt", "Clothes", 300, 50),
-            new Product("Sneakers", "Shoes", 150, 30),
-            new Product("Smart Watch", "Electronics", 500, 20),
-            new Product("Backpack", "Accessories", 80, 40),
-            new Product("Water Bottle", "Home", 25, 100)
-        ));
+    public List<com.example.examplefeature.model.Product> getAllProducts() {
+        return productServiceImpl.findAll().stream()
+                .map(productMapper::toModel)
+                .collect(Collectors.toList());
     }
 
-    public List<Product> getAllProducts() {
-        return new ArrayList<>(products);
-    }
-
-    public void updateProduct(Product updatedProduct) {
+    public void updateProduct(com.example.examplefeature.model.Product updatedProduct) {
+        List<Product> products = productServiceImpl.findAll();
+        
         Optional<Product> existingProduct = products.stream()
-                .filter(p -> p.getName().equals(updatedProduct.getName()))
+                .filter(p -> p.getTitle().equals(updatedProduct.getName()))
                 .findFirst();
 
         if (existingProduct.isPresent()) {
             Product product = existingProduct.get();
             product.setCategory(updatedProduct.getCategory());
-            product.setPrice(updatedProduct.getPrice());
+            product.setPrice(BigDecimal.valueOf(updatedProduct.getPrice()));
             product.setStock(updatedProduct.getStock());
             
+            productServiceImpl.update(product.getId(), product);
             System.out.println("Product updated: " + updatedProduct.getName());
         } else {
-            // إذا المنتج غير موجود، أضفه جديد
-            products.add(updatedProduct);
+            // If product doesn't exist, add it
+            Product newProduct = productMapper.toEntity(updatedProduct);
+            productServiceImpl.create(newProduct);
             System.out.println("New product added: " + updatedProduct.getName());
         }
     }
 
-    public Product getProductByName(String name) {
-        return products.stream()
-                .filter(p -> p.getName().equalsIgnoreCase(name))
+    public com.example.examplefeature.model.Product getProductByName(String name) {
+        return productServiceImpl.findAll().stream()
+                .filter(p -> p.getTitle().equalsIgnoreCase(name))
                 .findFirst()
+                .map(productMapper::toModel)
                 .orElse(null);
     }
 
-    public void deleteProduct(Product product) {
-        products.removeIf(p -> p.getName().equals(product.getName()));
+    public void deleteProduct(com.example.examplefeature.model.Product product) {
+        productServiceImpl.findAll().stream()
+                .filter(p -> p.getTitle().equals(product.getName()))
+                .findFirst()
+                .ifPresent(p -> productServiceImpl.delete(p.getId()));
     }
 
-    public void addProduct(Product product) {
-        products.add(product);
+    public void addProduct(com.example.examplefeature.model.Product product) {
+        Product entity = productMapper.toEntity(product);
+        productServiceImpl.create(entity);
+    }
+    
+    // New methods for direct entity access
+    public Product getEntityByName(String name) {
+        return productServiceImpl.findAll().stream()
+                .filter(p -> p.getTitle().equalsIgnoreCase(name))
+                .findFirst()
+                .orElse(null);
+    }
+    
+    public Product getEntityById(Long id) {
+        return productServiceImpl.findById(id).orElse(null);
     }
 }

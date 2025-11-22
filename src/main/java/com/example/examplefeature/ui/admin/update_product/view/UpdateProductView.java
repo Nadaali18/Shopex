@@ -1,4 +1,6 @@
 package com.example.examplefeature.ui.admin.update_product.view;
+
+import com.example.examplefeature.services.ProductService;
 import com.example.examplefeature.ui.layout.AppFooter;
 import com.example.examplefeature.ui.layout.AppHeader;
 import com.example.examplefeature.ui.admin.update_product.layout.ProductSelectionGrid;
@@ -6,14 +8,18 @@ import com.example.examplefeature.ui.admin.update_product.layout.ProductUpdateFo
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.RolesAllowed;
 
 @Route("update-product")
+@RolesAllowed("ADMIN")
 public class UpdateProductView extends VerticalLayout {
 
     private ProductSelectionGrid productSelectionGrid;
     private ProductUpdateForm productUpdateForm;
+    private final ProductService productService;
 
-    public UpdateProductView() {
+    public UpdateProductView(ProductService productService) {
+        this.productService = productService;
         setWidthFull();
         setPadding(false);
         setSpacing(false);
@@ -43,9 +49,9 @@ public class UpdateProductView extends VerticalLayout {
         mainContent.add(mainTitle);
         mainContent.setAlignItems(Alignment.CENTER);
 
-        productSelectionGrid = new ProductSelectionGrid();
+        productSelectionGrid = new ProductSelectionGrid(productService);
         
-        productUpdateForm = new ProductUpdateForm();
+        productUpdateForm = new ProductUpdateForm(productService);
         
         productSelectionGrid.setSelectionListener(productUpdateForm::loadProductData);
 

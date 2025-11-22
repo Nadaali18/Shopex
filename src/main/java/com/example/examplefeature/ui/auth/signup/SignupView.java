@@ -1,25 +1,32 @@
 package com.example.examplefeature.ui.auth.signup;
 
+import com.example.examplefeature.service.UserServiceImpl;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("signup")
+@PageTitle("Sign Up | Shopex")
+@AnonymousAllowed
 public class SignupView extends Div {
 
-    public SignupView() {
+    private final UserServiceImpl userService;
 
+    public SignupView(UserServiceImpl userService) {
+        this.userService = userService;
+        
         setSizeFull();
         setClassName("signup-page");
 
@@ -39,26 +46,25 @@ public class SignupView extends Div {
         box.getStyle().set("backdrop-filter", "blur(8px)");
         box.getStyle().set("padding", "40px");
         box.getStyle().set("border-radius", "15px");
-        box.getStyle().set("width", "350px");
+        box.getStyle().set("width", "400px");
 
         // Title
-        H1 title = new H1("Sign Up");
+        H1 title = new H1("Create Account");
         title.getStyle().set("color", "#3f0d50ff");
         
         // Fields
         TextField username = new TextField("Username");
         username.setWidthFull();
+        username.setRequired(true);
 
-        TextField email = new TextField("Email");
+        EmailField email = new EmailField("Email");
         email.setWidthFull();
+        email.setRequired(true);
 
         PasswordField password = new PasswordField("Password");
         password.setWidthFull();
-
-        ComboBox<String> role = new ComboBox<>("Role");
-        role.setItems("User", "Admin");
-        role.setWidthFull();
-        role.setPlaceholder("Select your role");
+        password.setRequired(true);
+        password.setHelperText("Minimum 6 characters");
 
         // Button
         Button signupButton = new Button("Sign Up");
@@ -67,43 +73,42 @@ public class SignupView extends Div {
         signupButton.getStyle().set("color", "white");
         
         signupButton.addClickListener(event -> {
-            // التحقق من الحقول المطلوبة
-            if (username.getValue().isEmpty() || email.getValue().isEmpty() || 
-                password.getValue().isEmpty() || role.getValue() == null) {
+            // Validate fields
+            if (username.isEmpty() || email.isEmpty() || password.isEmpty()) {
                 Notification.show("Please fill in all fields", 3000, Notification.Position.MIDDLE);
                 return;
             }
             
-            // التحقق من قوة كلمة المرور (اختياري)
+            // Validate email format
+            if (!email.getValue().contains("@")) {
+                Notification.show("Please enter a valid email", 3000, Notification.Position.MIDDLE);
+                return;
+            }
+            
+            // Validate password strength
             if (password.getValue().length() < 6) {
                 Notification.show("Password must be at least 6 characters", 3000, Notification.Position.MIDDLE);
                 return;
             }
             
-            // تسجيل المستخدم (هنا يمكنك إضافة منطق الحفظ في قاعدة البيانات)
-            boolean isSignupSuccessful = registerUser(username.getValue(), email.getValue(), password.getValue(), role.getValue());
-            
-            if (isSignupSuccessful) {
-                Notification.show("Account created successfully!", 3000, Notification.Position.MIDDLE);
-                
-                // التوجيه حسب الـ Role بعد التسجيل
-                if ("Admin".equals(role.getValue())) {
-                    UI.getCurrent().navigate("admin-home");
-                } else {
-                    UI.getCurrent().navigate("home");
-                }
-            } else {
-                Notification.show("Email already exists", 3000, Notification.Position.MIDDLE);
+            try {
+                // Register user
+                userService.createUser(username.getValue(), password.getValue(), email.getValue());
+                Notification.show("Account created successfully! Please login.", 3000, Notification.Position.MIDDLE);
+                UI.getCurrent().navigate("login");
+            } catch (RuntimeException e) {
+                Notification.show(e.getMessage(), 3000, Notification.Position.MIDDLE);
             }
         });
 
         Anchor login = new Anchor("/login", "Already have an account? Log in");
         login.getStyle().set("color", "#3f0d50ff");
         login.getStyle().set("font-weight", "bold");
+        login.getStyle().set("text-decoration", "none");
 
         // Form Layout
         VerticalLayout form = new VerticalLayout(
-                title, username, email, password, role, signupButton, login
+                title, username, email, password, signupButton, login
         );
         form.setAlignItems(FlexComponent.Alignment.CENTER);
         form.setPadding(false);
@@ -115,21 +120,9 @@ public class SignupView extends Div {
         VerticalLayout center = new VerticalLayout(box);
         center.setSizeFull();
         center.setAlignItems(FlexComponent.Alignment.START);
-        center.setJustifyContentMode(JustifyContentMode.CENTER);
+        center.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         box.getStyle().set("margin-left", "60px");
 
         add(bg, center);
-    }
-
-    // دالة لتسجيل المستخدم (يمكنك استبدالها بمنطق قاعدة البيانات)
-    private boolean registerUser(String username, String email, String password, String role) {
-        // هنا يمكنك إضافة منطق الحفظ في قاعدة البيانات
-        // للتبسيط، سأعود بـ true دائماً
-        
-        // في التطبيق الحقيقي:
-        // User user = new User(username, email, password, role);
-        // return userService.saveUser(user);
-        
-        return true;
     }
 }

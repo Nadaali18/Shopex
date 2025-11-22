@@ -13,8 +13,8 @@ public class ProductGrid extends VerticalLayout {
     private ProductService productService;
     private List<Product> products;
 
-    public ProductGrid() {
-        productService = new ProductService();
+    public ProductGrid(ProductService productService) {
+        this.productService = productService;
         createProductGrid();
     }
 

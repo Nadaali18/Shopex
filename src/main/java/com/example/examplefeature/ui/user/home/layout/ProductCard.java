@@ -12,8 +12,10 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 
 public class ProductCard extends VerticalLayout {
     private static final String PRIMARY_COLOR = "#3f0d50ff";
+    private final HomeCartService homeCartService;
     
-    public ProductCard(String name, String category, String price, String imagePath) {
+    public ProductCard(String name, String category, String price, String imagePath, HomeCartService homeCartService) {
+        this.homeCartService = homeCartService;
         createCard(name, category, price, imagePath);
     }
     
@@ -105,7 +107,7 @@ public class ProductCard extends VerticalLayout {
             .set("font-weight", "bold")
             .set("margin-top", "10px");
 
-        button.addClickListener(e -> HomeCartService.addProductToCart(name, category, price, imagePath));
+        button.addClickListener(e -> homeCartService.addProductToCart(name, category, price, imagePath));
         return button;
     }
 }

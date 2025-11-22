@@ -6,8 +6,10 @@ import com.example.examplefeature.ui.layout.AppHeader;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.RolesAllowed;
 
 @Route("admin-home")
+@RolesAllowed("ADMIN")
 public class AdminHomeView extends VerticalLayout {
 
     public AdminHomeView() {

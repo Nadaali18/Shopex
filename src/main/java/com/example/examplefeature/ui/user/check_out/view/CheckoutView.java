@@ -1,4 +1,6 @@
 package com.example.examplefeature.ui.user.check_out.view;
+
+import com.example.examplefeature.services.CheckoutService;
 import com.example.examplefeature.ui.layout.AppFooter;
 import com.example.examplefeature.ui.layout.AppHeader;
 import com.example.examplefeature.ui.user.check_out.layout.OrderSummary;
@@ -7,11 +9,16 @@ import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
+import jakarta.annotation.security.PermitAll;
 
 @Route("checkout")
+@PermitAll
 public class CheckoutView extends VerticalLayout {
 
-    public CheckoutView() {
+    private final CheckoutService checkoutService;
+
+    public CheckoutView(CheckoutService checkoutService) {
+        this.checkoutService = checkoutService;
         setupUI();
     }
 
@@ -42,7 +49,7 @@ public class CheckoutView extends VerticalLayout {
         mainContent.setSpacing(true);
 
         PaymentSection paymentSection = new PaymentSection();
-        OrderSummary orderSummary = new OrderSummary();
+        OrderSummary orderSummary = new OrderSummary(checkoutService);
 
         mainContent.add(paymentSection, orderSummary);
         return mainContent;

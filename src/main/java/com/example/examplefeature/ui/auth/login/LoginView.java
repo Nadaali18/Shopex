@@ -1,24 +1,26 @@
 package com.example.examplefeature.ui.auth.login;
-import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
+
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.PasswordField;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.auth.AnonymousAllowed;
 
 @Route("login")
-public class LoginView extends Div {
+@PageTitle("Login | Shopex")
+@AnonymousAllowed
+public class LoginView extends Div implements BeforeEnterObserver {
+
+    private final LoginForm loginForm = new LoginForm();
 
     public LoginView() {
-
         setSizeFull();
         setClassName("login-page");
 
@@ -36,58 +38,20 @@ public class LoginView extends Div {
         box.getStyle().set("backdrop-filter", "blur(8px)");
         box.getStyle().set("padding", "40px");
         box.getStyle().set("border-radius", "15px");
-        box.getStyle().set("width", "350px");
+        box.getStyle().set("width", "400px");
 
-        H1 title = new H1("Login");
+        H1 title = new H1("Login to Shopex");
         title.getStyle().set("color", "#3f0d50ff");
 
-        TextField email = new TextField("Email");
-        email.setWidthFull();
-
-        PasswordField password = new PasswordField("Password");
-        password.setWidthFull();
-
-        ComboBox<String> role = new ComboBox<>("Role");
-        role.setItems("User", "Admin");
-        role.setWidthFull();
-        role.setPlaceholder("Select your role");
-
-        Button loginButton = new Button("Login");
-        loginButton.setWidthFull();
-        loginButton.getStyle().set("background-color", "#3f0d50ff");
-        loginButton.getStyle().set("color", "white");
+        loginForm.setAction("login");
+        loginForm.setForgotPasswordButtonVisible(false);
         
-        loginButton.addClickListener(event -> {
-            // التحقق من الحقول المطلوبة
-            if (email.getValue().isEmpty() || password.getValue().isEmpty() || role.getValue() == null) {
-                Notification.show("Please fill in all fields", 3000, Notification.Position.MIDDLE);
-                return;
-            }
-            
-            // التحقق من بيانات Login (هنا يمكنك إضافة منطق التحقق من قاعدة البيانات)
-            boolean isValidLogin = validateLogin(email.getValue(), password.getValue(), role.getValue());
-            
-            if (isValidLogin) {
-                // التوجيه حسب الـ Role
-                if ("Admin".equals(role.getValue())) {
-                    UI.getCurrent().navigate("admin-home");
-                    Notification.show("Welcome Admin!", 2000, Notification.Position.MIDDLE);
-                } else {
-                    UI.getCurrent().navigate("home");
-                    Notification.show("Welcome!", 2000, Notification.Position.MIDDLE);
-                }
-            } else {
-                Notification.show("Invalid email or password", 3000, Notification.Position.MIDDLE);
-            }
-        });
-
         Anchor signup = new Anchor("/signup", "Don't have an account? Sign up");
         signup.getStyle().set("color", "#3f0d50ff");
         signup.getStyle().set("font-weight", "bold");
+        signup.getStyle().set("text-decoration", "none");
 
-        VerticalLayout form = new VerticalLayout(
-                title, email, password, role, loginButton, signup
-        );
+        VerticalLayout form = new VerticalLayout(title, loginForm, signup);
         form.setAlignItems(FlexComponent.Alignment.CENTER);
         form.setPadding(false);
         form.setSpacing(true);
@@ -97,23 +61,16 @@ public class LoginView extends Div {
         VerticalLayout center = new VerticalLayout(box);
         center.setSizeFull();
         center.setAlignItems(FlexComponent.Alignment.START);
-        center.setJustifyContentMode(JustifyContentMode.CENTER);
+        center.setJustifyContentMode(FlexComponent.JustifyContentMode.CENTER);
         box.getStyle().set("margin-left", "60px");
+        
         add(bg, center);
     }
 
-    // دالة للتحقق من بيانات Login (يمكنك استبدالها بمنطق قاعدة البيانات)
-    private boolean validateLogin(String email, String password, String role) {
-        // هنا يمكنك إضافة منطق التحقق من قاعدة البيانات
-        // للتبسيط، سأستخدم بيانات افتراضية
-        
-        if ("Admin".equals(role)) {
-            return "admin@shopex.com".equals(email) && "admin123".equals(password);
-        } else {
-            return "user@shopex.com".equals(email) && "user123".equals(password);
+    @Override
+    public void beforeEnter(BeforeEnterEvent event) {
+        if (event.getLocation().getQueryParameters().getParameters().containsKey("error")) {
+            loginForm.setError(true);
         }
-        
-        // في التطبيق الحقيقي، استبدل هذا بالتحقق من قاعدة البيانات
-        // return userService.validateLogin(email, password, role);
     }
 }
